@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Inter", system-ui, "Avenir", "Helvetica", "Arial", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.page-background {
+  background-image: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=228&q=80');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.page-overlay {
+  @apply min-h-screen bg-black/60 flex items-center justify-center px-4;
+}
+
+.content-container {
+  @apply max-w-2xl w-full;
+}
+
+.page-header {
+  @apply text-center mb-8;
+}
+
+.page-title {
+  @apply text-4xl md:text-5xl font-bold text-warm-100 mb-4;
+}
+
+.page-subtitle {
+  @apply text-xl text-warm-200 mb-4;
+}
+
+.helper-text {
+  @apply text-warm-200/90 text-sm max-w-lg mx-auto;
+}
+
+.search-container {
+  @apply bg-black/40 backdrop-blur-sm p-6 md:p-8 rounded-lg shadow-xl;
+}
+
+.search-form {
+  @apply space-y-4;
+}
+
+.input-group {
+  @apply flex flex-col md:flex-row gap-4;
+}
+
+.search-input {
+  @apply flex-1 p-4 rounded-lg bg-white/10 text-warm-100 placeholder-warm-300/70 border border-warm-300/20 focus:outline-none focus:border-warm-300/40 resize-none;
+}
+
+.search-button {
+  @apply md:self-start px-6 py-4 bg-warm-500/90 hover:bg-warm-500 text-black font-semibold rounded-lg transition-colors duration-200;
+}
+
+.recommendations-container {
+  @apply mt-8 p-6 bg-black/30 rounded-lg border border-warm-300/20;
+}
+
+.recommendations-title {
+  @apply text-xl font-semibold text-warm-100 mb-4;
+}
+
+.recommendations-list {
+  @apply space-y-3;
+}
+
+.recommendation-item {
+  @apply text-warm-200;
+}
