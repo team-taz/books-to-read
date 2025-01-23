@@ -1,5 +1,5 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
 
 const app = express();
 
@@ -28,4 +28,6 @@ const errorHandler = (err, _req, res, _next) => {
 
 app.use(errorHandler);
 
-module.exports = app;
+export default app;
+
+//changed from CommonJS modules to ES modules
