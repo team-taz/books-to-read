@@ -1,8 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import { parseUserQuery } from './controllers/userQueryController.js';
-import { queryOpenAIEmbedding, queryOpenAIChat } from './controllers/openaiController.js';
-// import { queryPineconeDatabase } from './controllers/pineconeController.js';
+import {
+  queryOpenAIEmbedding,
+  queryOpenAIChat,
+} from './controllers/openaiController.js';
+import { queryPineconeDatabase } from './controllers/pineconeController.js';
 // import { logQuery } from './controllers/logController.js'; // work in progress
 
 const app = express();
@@ -11,14 +14,18 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Hello from the backend!');
-  });
+  res.send('Hello from the backend!');
+});
 
-app.post('/api',
-  parseUserQuery, queryOpenAIEmbedding, queryOpenAIChat,
+app.post(
+  '/api',
+  parseUserQuery,
+  queryOpenAIEmbedding,
+  queryPineconeDatabase,
+  queryOpenAIChat,
   (_req, res) => {
     res.status(200).json({
-      movieRecommendation: res.locals.movieRecommendation
+      movieRecommendation: res.locals.movieRecommendation,
     });
   }
 );
