@@ -4,13 +4,28 @@ import BookSearchForm from '../components/BookSearchForm'
 function App() {
   const [recommendations, setRecommendations] = useState(null)
 
-  const handleSearch = (query) => {
-    // Placeholder for API call
-    setRecommendations([
-      "The Midnight Library by Matt Haig",
-      "Atomic Habits by James Clear",
-      "Project Hail Mary by Andy Weir"
-    ])
+  const handleSearch = (data) => {
+    // Parse the recommendation string into a more structured format
+    const recommendationText = data.bookRecommendation
+    // Split into individual book recommendations
+    const books = recommendationText
+      .split(/\d\./)  // Split on number followed by period
+      .slice(1)       // Remove the initial empty string
+      .map(book => {
+        // Extract title and author
+        const match = book.match(/"([^"]+)" by ([^:(\n]+)/)
+        if (match) {
+          return {
+            title: match[1],
+            author: match[2].trim(),
+            description: book.split(':')[1]?.trim() || ''
+          }
+        }
+        return null
+      })
+      .filter(Boolean)  // Remove any null entries
+
+    setRecommendations(books)
   }
 
   return (
@@ -38,12 +53,14 @@ function App() {
                   Your Recommended Books
                 </h2>
                 <ul className="recommendations-list">
-                  {recommendations.map((book, index) => (
+                {recommendations.map((book, index) => (
                     <li
                       key={index}
                       className="recommendation-item"
                     >
-                      {book}
+                      <h3 className="book-title">{book.title}</h3>
+                      <p className="book-author">by {book.author}</p>
+                      <p className="book-description">{book.description}</p>
                     </li>
                   ))}
                 </ul>

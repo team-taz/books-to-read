@@ -8,7 +8,7 @@ const pinecone = new Pinecone({
 const booksIndex = pinecone.index('books');
 
 export const queryPineconeDatabase = async (
-_req,
+req,
 res,
 next
 ) => {
@@ -31,8 +31,16 @@ if (!embedding) {
 });
 
     // Store the query results in res.locals
-    console.log('queryResponse:', queryResponse);
-    res.locals.pineconeQueryResult = queryResponse.matches;
+    console.log('Pinecone Query Response:', {
+        matchCount: queryResponse.matches.length,
+        firstMatchScore: queryResponse.matches[0]?.score,
+        firstMatchMetadata: queryResponse.matches[0]?.metadata
+    });
+    res.locals.pineconeQueryResult = queryResponse.matches.map(match => ({
+        score: match.score,
+        metadata: match.metadata,
+        id: match.id
+    }));
     return next();
 
     } catch (err) {
@@ -44,5 +52,3 @@ if (!embedding) {
     return next(error);
 }
 };
-
-console.log('API Key:', process.env.PINECONE_API_KEY);

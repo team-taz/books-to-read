@@ -2,13 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import dotenv from 'dotenv';
 import { parseUserQuery } from './controllers/userQueryController.js';
 import { queryOpenAIEmbedding, queryOpenAIChat } from './controllers/openaiController.js';
 import { queryPineconeDatabase } from './controllers/pineconeController.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const app = express();
 
@@ -21,8 +19,8 @@ app.get('/', (_req, res) => {
     res.send('Hello from the backend!');
   });
 
-app.post('/api',
-  parseUserQuery, queryOpenAIEmbedding, queryOpenAIChat, queryPineconeDatabase,
+app.post('/api/recommendations',
+  parseUserQuery, queryOpenAIEmbedding, queryPineconeDatabase, queryOpenAIChat,
   (_req, res) => {
     res.status(200).json({
       bookRecommendation: res.locals.bookRecommendation

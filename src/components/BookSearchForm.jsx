@@ -11,7 +11,7 @@ function BookSearchForm({ onSubmit }) {
     setIsLoading(true)
 
     try {
-      const response = await fetch('/api/', {
+      const response = await fetch('/api/recommendations', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,8 +22,8 @@ function BookSearchForm({ onSubmit }) {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
       }
-
-      const data = await response.json()
+      const data = await response.json() 
+      console.log('API Response:', data) 
       onSubmit(data)
     } catch (err) {
       setError('Failed to get recommendations. Please try again.')
