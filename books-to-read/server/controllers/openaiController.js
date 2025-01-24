@@ -1,12 +1,17 @@
 import OpenAI from 'openai';
 import dotenv from 'dotenv';
+import process from 'process'
+
+// Configure dotenv at top of file
+
+dotenv.config();
 
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
+    apiKey: process.env.OPENAI_API_KEY || ''
 });
 
 export const queryOpenAIEmbedding = async (req, res, next) => {
-    const userQuery = res.locals.userQuery;
+    const { userQuery }= res.locals;
     if (!userQuery) {
       const error = {
         log: 'queryOpenAIEmbedding did not receive a user query',
@@ -20,9 +25,12 @@ export const queryOpenAIEmbedding = async (req, res, next) => {
         const embeddingResponse = await openai.embeddings.create({
           model: 'text-embedding-3-small',
           input: userQuery,
+          encoding_format: 'float'
         });
+
+
         //The embedding property inside data[0] contains the actual embedding
-        console.log(embeddingResponse);
+        // console.log(embeddingResponse);
         res.locals.embedding = embeddingResponse.data[0].embedding; //console.log: { data: [ { embedding: [Array] } ] }
         return next();
     } catch (error){

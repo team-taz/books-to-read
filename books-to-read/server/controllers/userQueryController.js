@@ -1,8 +1,6 @@
-export const parseUserQuery = async (
-    req,
-    res,
-    next
-) => {
+import express from 'express';
+
+export const parseUserQuery = async (req, res, next) => {
     if (!req.body.userQuery /* rename .userQuery to the correct name */) {
         const error = {
             log: 'User query not provided',
