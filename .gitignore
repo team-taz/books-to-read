@@ -26,3 +26,4 @@ dist-ssr
 .DS_Store
 books-to-read/.env
 
+node_modules

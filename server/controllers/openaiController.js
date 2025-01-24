@@ -10,7 +10,7 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY|| ''
 });
 
-export const queryOpenAIEmbedding = async (req, res, next) => {
+export const queryOpenAIEmbedding = async (_req, res, next) => {
     const { userQuery }= res.locals;
     if (!userQuery) {
       const error = {
@@ -43,7 +43,7 @@ export const queryOpenAIEmbedding = async (req, res, next) => {
     }
 };
 
-export const queryOpenAIChat = async (req, res, next) => {
+export const queryOpenAIChat = async (_req, res, next) => {
     const { userQuery, pineconeQueryResult } = res.locals;
     if (!userQuery) {
       const error = {

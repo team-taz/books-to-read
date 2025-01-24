@@ -1,3 +1,7 @@
-import app from './app';
+import app from './app.js';
 
-app.listen(3000, () => console.log('The server is listening on port 3000'))
+const port = 3000;
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});

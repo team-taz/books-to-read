@@ -1,24 +1,31 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 import { parseUserQuery } from './controllers/userQueryController.js';
 import { queryOpenAIEmbedding, queryOpenAIChat } from './controllers/openaiController.js';
-// import { queryPineconeDatabase } from './controllers/pineconeController.js';
-// import { logQuery } from './controllers/logController.js'; // work in progress
+import { queryPineconeDatabase } from './controllers/pineconeController.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // Your Vite frontend URL
+}));
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
     res.send('Hello from the backend!');
   });
 
 app.post('/api',
-  parseUserQuery, queryOpenAIEmbedding, queryOpenAIChat,
+  parseUserQuery, queryOpenAIEmbedding, queryOpenAIChat, queryPineconeDatabase,
   (_req, res) => {
     res.status(200).json({
-      movieRecommendation: res.locals.movieRecommendation
+      bookRecommendation: res.locals.bookRecommendation
     });
   }
 );
